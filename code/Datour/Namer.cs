@@ -38,5 +38,12 @@ namespace Datour
             string prefix = from_filename_get_prefix(filename);
             return prefix != PREFIX_INVALID;
         }
+
+        public static string from_filename_and_dateonly_get_filename_with_prefix(string filename, DateOnly dateonly)
+        {
+            string prefix = Namer.from_dateonly_get_prefix(dateonly);
+            string filename_with_prefix = $"{prefix}{filename}";
+            return filename_with_prefix;
+        }
     }
 }

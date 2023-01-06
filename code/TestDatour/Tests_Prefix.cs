@@ -12,7 +12,7 @@
             string ymd = Datour.Namer.from_dateonly_get_ymd(dateonly);
             Assert.That(ymd, Is.EqualTo(expected_ymd));
         }
-
+        
         [TestCase(2022, 1, 2, "2022_01_02-")]
         public void from_dateonly_get_prefix(int year, int month, int day, string expected_prefix)
         {
@@ -20,9 +20,9 @@
             string prefix = Datour.Namer.from_dateonly_get_prefix(dateonly);
             Assert.That(prefix, Is.EqualTo(expected_prefix));
         }
-
-
-        [TestCase("2022_01_02-filename.ext", "2022_01_02-")]
+        
+        [TestCase("2022_01_02-filename.ext", "2022_01_02-")] // prefix
+        [TestCase("filename.ext", "")]                       // no prefix
         public void from_filename_get_prefix(string filename, string expected_prefix)
         {
             string prefix = Datour.Namer.from_filename_get_prefix(filename);
@@ -51,6 +51,17 @@
         {
             bool has_prefix = Datour.Namer.from_filename_has_prefix(filename);
             Assert.That(has_prefix, Is.False);
+        }
+        
+        [TestCase("filename.ext", 2022, 1, 2, "2022_01_02-filename.ext")]
+        [TestCase("filename.ext", 2022, 12, 31, "2022_12_31-filename.ext")]
+        public void from_filename_and_dateonly_get_filename_with_prefix(string filename, int year, int month, int day, 
+            string expected_filename_with_prefix)
+        {
+            DateOnly dateonly = new DateOnly(year, month, day);
+            string filename_with_prefix = Datour.Namer.from_filename_and_dateonly_get_filename_with_prefix(filename, dateonly);
+            
+            Assert.That(filename_with_prefix, Is.EqualTo(expected_filename_with_prefix));
         }
     }
 }
