@@ -1,30 +1,7 @@
-using Datour;
-
-namespace TestDatour
+﻿namespace TestDatour
 {
-    public class Tests
+    public class Tests_Prefix
     {
-        const string FILENAME = "filename.ext";
-
-        [SetUp]
-        public void Setup()
-        {
-            File.Delete(FILENAME);
-        }
-
-        [Test]
-        public void Filepath_Exist()
-        {
-            File.Create(FILENAME).Close();
-            Assert.That(File.Exists(FILENAME), Is.True);
-        }
-
-        [Test]
-        public void Filepath_ExistNot()
-        {
-            Assert.That(File.Exists(FILENAME), Is.False);
-        }
-        
         [TestCase(2022, 1, 1, "2022_01_01")]
         [TestCase(2022, 12, 31, "2022_12_31")]
         [TestCase(2022, 1, 31, "2022_01_31")]
