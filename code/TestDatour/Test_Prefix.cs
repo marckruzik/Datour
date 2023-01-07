@@ -1,6 +1,6 @@
 ﻿namespace TestDatour
 {
-    public class Tests_Prefix
+    public class Test_Prefix
     {
         [TestCase(2022, 1, 1, "2022_01_01")]
         [TestCase(2022, 12, 31, "2022_12_31")]

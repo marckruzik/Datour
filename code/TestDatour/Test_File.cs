@@ -2,7 +2,7 @@ using Datour;
 
 namespace TestDatour
 {
-    public partial class Tests_File
+    public partial class Test_File
     {
         const string FILENAME = "filename.ext";
 
