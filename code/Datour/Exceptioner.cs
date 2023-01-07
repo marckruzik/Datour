@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Datour
 {
-    public class Exceptioner
+    public partial class Exceptioner
     {
         public static void from_args_check_zero(string[] args)
         {
@@ -49,6 +49,30 @@ namespace Datour
             }
         }
     }
+
+    public partial class Exceptioner
+    {
+        public static string from_args_get_message(string[] args)
+        {
+            try
+            {
+                from_args_check_zero(args);
+                from_args_check_multiple(args);
+                string input = args[0];
+                from_input_check_prefix(input);
+                from_input_check_folderpath(input);
+                from_input_check_filepath_missing(input);
+            }
+            catch(Exception e)
+            {
+                return $"Failure because of {e.GetType()}";
+            }
+
+            return "";
+        }
+
+    }
+
 
     public class Exception_Zero : Exception {}
     public class Exception_Multiple : Exception {}

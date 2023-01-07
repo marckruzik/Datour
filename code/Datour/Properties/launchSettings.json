@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Datour": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Work\\Programme\\Datour\\code\\Datour\\bin\\Debug\\net6.0\\New Text Document.txt\"",
+      "nativeDebugging": false
+    }
+  }
+}
