@@ -30,6 +30,8 @@
         }
         
         [TestCase("2022_01_02-filename.ext")]
+        [TestCase("2022_01_02-.ext")]
+        [TestCase("2022_01_02-")]
         public void from_filename_has_prefix(string filename)
         {
             bool has_prefix = Datour.Namer.from_filename_has_prefix(filename);
