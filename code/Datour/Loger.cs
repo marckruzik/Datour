@@ -12,7 +12,9 @@ namespace Datour
 
         public static string from_system_get_log_folderpath()
         {
-            string log_folderpath = Path.Join(AppDomain.CurrentDomain.BaseDirectory, "log");
+            string log_folderpath = Path.Combine(
+               Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+               @"Datour\log");
             return log_folderpath;
         }
 
