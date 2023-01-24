@@ -48,6 +48,15 @@ namespace Datour
                 throw new Exception_Filepath_Missing();
             }
         }
+
+        public static void from_input_check_filepath_other_with_prefix(string input)
+        {
+            string filepath_with_prefix = Datour.IO.from_filepath_get_filepath_with_prefix(input);
+            if (File.Exists(filepath_with_prefix) == true)
+            {
+                throw new Exception_Filepath_Other_With_Prefix();
+            }
+        }
     }
 
     public partial class Exceptioner
@@ -62,6 +71,7 @@ namespace Datour
                 from_input_check_prefix(input);
                 from_input_check_folderpath(input);
                 from_input_check_filepath_missing(input);
+                from_input_check_filepath_other_with_prefix(input);
             }
             catch(Exception e)
             {
@@ -79,5 +89,6 @@ namespace Datour
     public class Exception_Prefix : Exception {}
     public class Exception_Folderpath : Exception {}
     public class Exception_Filepath_Missing : Exception {}
+    public class Exception_Filepath_Other_With_Prefix : Exception {}
 
 }

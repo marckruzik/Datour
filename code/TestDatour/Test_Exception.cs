@@ -84,6 +84,29 @@ namespace TestDatour
             Assert.Throws<Exception_Filepath_Missing>(() => Datour.Exceptioner.from_input_check_filepath_missing(input));
         }
 
+        [Test]
+        public static void from_input_check_filepath_other_with_prefix()
+        {
+            DateTime datetime = new DateTime(2022, 1, 2);
+
+            // We create a file with prefix
+            string filepath = Path.GetFullPath(FILENAME);
+            File.Create(filepath).Close();
+            File.SetLastWriteTime(filepath, datetime);
+            string filepath_with_prefix = Datour.IO.from_filepath_get_filepath_with_prefix(filepath);
+            if (File.Exists(filepath_with_prefix) == true) 
+            { 
+                File.Delete(filepath_with_prefix); 
+            }
+            Datour.IO.from_filepath_set_filepath_with_prefix(filepath);
+
+            // We create a file without prefix
+            File.Create(filepath).Close();
+            File.SetLastWriteTime(filepath, datetime);
+
+            Assert.Throws<Exception_Filepath_Other_With_Prefix>(() => Datour.Exceptioner.from_input_check_filepath_other_with_prefix(filepath));
+        }
+
 
     }
 }
