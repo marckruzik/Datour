@@ -45,20 +45,20 @@ jobs:
 
       - name: Copy Release folder to Repo Name folder
         run: |
-          mkdir -p ./${{ github.repository }}
-          cp -r $release_dir/* ./${{ github.repository }}
+          mkdir -p ${{ github.workspace }}/${{ github.repository }}
+          cp -r $release_dir/* ${{ github.workspace }}/${{ github.repository }}
 
       - name: Zip
         uses: thedoctor0/zip-release@0.7.1
         with:
           type: 'zip'
-          filename: '${{ github.repository }}.zip'
-          path: ./${{ github.repository }}
+          filename: '${{ github.workspace }}/${{ github.repository }}.zip'
+          path: ${{ github.workspace }}/${{ github.repository }}
         
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          files: '${{ github.repository }}.zip'
+          files: '${{ github.workspace }}/${{ github.repository }}.zip'
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
