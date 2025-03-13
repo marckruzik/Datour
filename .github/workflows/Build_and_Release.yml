@@ -10,13 +10,11 @@ permissions:
   
 env:
   DOTNET_VERSION: '6.0.x'
+  WORKING_DIRECTORY: 'code'
   
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: code
 
     steps:
       - name: Checkout repository
@@ -29,17 +27,43 @@ jobs:
 
       - name: Restore dependencies
         run: dotnet restore
+        working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Build project
-        run: dotnet publish -c Release -o ${{ github.workspace }}/out
+        run: dotnet publish -c Release
+        working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Run tests
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test -c Release --no-build --verbosity normal
+        working-directory: ${{ env.WORKING_DIRECTORY }}
 
+      - name: Repository Name get
+        run: |
+          $REPO = $Env:GITHUB_REPOSITORY.Split("/")[1]
+          "repo_name=$REPO" >> $env:GITHUB_ENV
+          echo $REPO
+
+      - name: Find first Release folder and .exe file
+        run: |
+          release_dir=$(find . -type d -name "Release" -print -quit)
+          exe_dir=$(find "$release_dir" -type f -name "*.exe" -exec dirname {} \; | head -n 1)
+
+      - name: Copy Release folder to Repo Name folder
+        run: |
+          mkdir -p ./${{ env.repo_name }}
+          cp -r $release_dir/* ./${{ env.repo_name }}
+
+      - name: Zip
+        uses: thedoctor0/zip-release@0.7.1
+        with:
+          type: 'zip'
+          filename: '${{ env.repo_name }}.zip'
+          path: ./${{ env.repo_name }}
+        
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ github.workspace }}/out/*
+          files: '${{ env.repo_name }}.zip'
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
