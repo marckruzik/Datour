@@ -52,6 +52,7 @@ namespace TestDatour
         [TestCase(@"C:\2022_12_31-filename.ext")]
         public static void from_input_check_prefix_true(string input)
         {
+            input = input.Replace(@"\", Path.DirectorySeparatorChar.ToString());
             Assert.Throws<Exception_Prefix>(() => Datour.Exceptioner.from_input_check_prefix(input));
         }
 
