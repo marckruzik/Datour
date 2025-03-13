@@ -41,6 +41,7 @@ jobs:
         run: |
           release_dir=$(find . -type d -name "Release" -print -quit)
           exe_dir=$(find "$release_dir" -type f -name "*.exe" -exec dirname {} \; | head -n 1)
+          echo $release_dir
 
       - name: Copy Release folder to Repo Name folder
         run: |
