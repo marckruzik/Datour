@@ -5,12 +5,18 @@ on:
     tags:
       - "v*.*.*"
 
+permissions:
+  contents: write
+  
 env:
   DOTNET_VERSION: '6.0.x'
   
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: code
 
     steps:
       - name: Checkout repository
@@ -25,7 +31,7 @@ jobs:
         run: dotnet restore
 
       - name: Build project
-        run: dotnet publish -c Release -o out
+        run: dotnet publish -c Release -o ${{ github.workspace }}/out
 
       - name: Run tests
         run: dotnet test --no-build --verbosity normal
@@ -33,7 +39,7 @@ jobs:
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          files: out/*
+          files: ${{ github.workspace }}/out/*
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
