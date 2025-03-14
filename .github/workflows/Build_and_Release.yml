@@ -50,7 +50,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Build project Release
-        run: dotnet publish -c Debug -r win-x64 --self-contained false -o ${{ env.RELEASE_DIRECTORY }}
+        run: dotnet publish -c Debug -r win-x64 -p:OutputType=WinExe --self-contained false -o ${{ env.RELEASE_DIRECTORY }}
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Zip
