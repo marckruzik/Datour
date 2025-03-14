@@ -11,6 +11,8 @@ permissions:
 env:
   DOTNET_VERSION: '6.0.x'
   WORKING_DIRECTORY: 'code'
+  OUT_DIRECTORY: ${{ github.workspace }}/out
+  RELEASE_DIRECTORY: ${{ env.OUT_DIRECTORY }}/${{ github.event.repository.name }}
   
 jobs:
   build:
@@ -38,7 +40,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Build project Release
-        run: dotnet publish -c Debug -o ${{ github.workspace }}/out/${{ github.event.repository.name }}
+        run: dotnet publish -c Debug -o ${{ env.OUT_DIRECTORY }}/${{ github.event.repository.name }}
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Zip
@@ -47,7 +49,7 @@ jobs:
           type: 'zip'
           filename: '${{ github.workspace }}/${{ github.event.repository.name }}.zip'
           path: ${{ github.event.repository.name }}
-          directory: ${{ github.workspace }}/out
+          directory: ${{ env.OUT_DIRECTORY }}
         
       - name: Create release
         uses: softprops/action-gh-release@v2
