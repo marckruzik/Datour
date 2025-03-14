@@ -47,7 +47,7 @@ jobs:
           type: 'zip'
           filename: '${{ github.workspace }}/${{ github.event.repository.name }}.zip'
           path: ${{ github.event.repository.name }}
-        working-directory: ${{ github.workspace }}/out
+          directory: ${{ github.workspace }}/out
         
       - name: Create release
         uses: softprops/action-gh-release@v2
