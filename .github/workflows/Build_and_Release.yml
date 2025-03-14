@@ -20,7 +20,9 @@ jobs:
     steps:
       - name: Define Directories
         run: |
-          echo "RELEASE_DIRECTORY=${{ env.OUT_DIRECTORY }}/${{ github.event.repository.name }}" >> $GITHUB_ENV
+          echo "RELEASE_FOLDER_NAME=${{ github.event.repository.name }}-${{ github.ref_name }}" >> $GITHUB_ENV
+          echo "RELEASE_DIRECTORY=${{ env.OUT_DIRECTORY }}/${{ env.RELEASE_FOLDER_NAME }}" >> $GITHUB_ENV
+          echo "ZIP_FILEPATH=${{ github.workspace }}/${{ env.RELEASE_FOLDER_NAME }}.zip" >> $GITHUB_ENV
     
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -43,21 +45,21 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Build project Release
-        run: dotnet publish -c Debug -o ${{ env.OUT_DIRECTORY }}/${{ github.event.repository.name }}
+        run: dotnet publish -c Debug -o ${{ env.RELEASE_DIRECTORY }}
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Zip
         uses: thedoctor0/zip-release@0.7.1
         with:
           type: 'zip'
-          filename: '${{ github.workspace }}/${{ github.event.repository.name }}.zip'
-          path: ${{ github.event.repository.name }}
+          filename: ${{ env.ZIP_FILEPATH }}
+          path: ${{ env.RELEASE_FOLDER_NAME }}
           directory: ${{ env.OUT_DIRECTORY }}
         
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          files: '${{ github.workspace }}/${{ github.event.repository.name }}.zip'
+          files: ${{ env.ZIP_FILEPATH }}
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
