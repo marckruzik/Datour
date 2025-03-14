@@ -36,9 +36,9 @@ You don't have to install Easy Context Menu, you have to unzip it and run it fro
 
 * Click the button Save Changes
 * Close the List Editor
-* You are now back at the initial window
+* You are now back at the initial window (see screenshot below)
 
-![](image/Easy_Context Menu-main_window-add_prefix.png)
+![](image/Easy_Context_Menu-main_window-add_prefix.png)
 
 * In the list, find "File Context Menu"
 * check "Add prefix YYYY_MM_DD-"
