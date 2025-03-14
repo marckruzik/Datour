@@ -12,13 +12,16 @@ env:
   DOTNET_VERSION: '6.0.x'
   WORKING_DIRECTORY: 'code'
   OUT_DIRECTORY: ${{ github.workspace }}/out
-  RELEASE_DIRECTORY: ${{ env.OUT_DIRECTORY }}/${{ github.event.repository.name }}
   
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Define Directories
+        run: |
+          echo "RELEASE_DIRECTORY=${{ env.OUT_DIRECTORY }}/${{ github.event.repository.name }}" >> $GITHUB_ENV
+    
       - name: Checkout repository
         uses: actions/checkout@v4
 
