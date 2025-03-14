@@ -29,36 +29,29 @@ jobs:
         run: dotnet restore
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
-      - name: Build project
-        run: dotnet publish -c Release
+      - name: Build project Debug
+        run: dotnet publish -c Debug
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
-      - name: Run tests
-        run: dotnet test -c Release --no-build --verbosity normal
+      - name: Run tests Debug
+        run: dotnet test -c Debug --no-build --verbosity normal
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
-      - name: Find first Release folder and .exe file
-        run: |
-          release_dir=$(find . -type d -name "Release" -print -quit)
-          exe_dir=$(find "$release_dir" -type f -name "*.exe" -exec dirname {} \; | head -n 1)
-          echo $release_dir
-
-      - name: Copy Release folder to Repo Name folder
-        run: |
-          mkdir -p ${{ github.workspace }}/${{ github.repository }}
-          cp -r $release_dir/* ${{ github.workspace }}/${{ github.repository }}
+      - name: Build project Release
+        run: dotnet publish -c Debug -o ${{ github.workspace }}/out/${{ github.event.repository.name }}
+        working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Zip
         uses: thedoctor0/zip-release@0.7.1
         with:
           type: 'zip'
-          filename: '${{ github.workspace }}/${{ github.repository }}.zip'
-          path: ${{ github.workspace }}/${{ github.repository }}
+          filename: '${{ github.workspace }}/${{ github.event.repository.name }}.zip'
+          path: ${{ github.workspace }}/out/${{ github.event.repository.name }}
         
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          files: '${{ github.workspace }}/${{ github.repository }}.zip'
+          files: '${{ github.workspace }}/${{ github.event.repository.name }}.zip'
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
