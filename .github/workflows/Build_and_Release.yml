@@ -21,8 +21,8 @@ jobs:
       - name: Define Directories
         run: |
           echo "RELEASE_FOLDER_NAME=${{ github.event.repository.name }}-${{ github.ref_name }}" >> $GITHUB_ENV
-          echo "RELEASE_DIRECTORY=${{ env.OUT_DIRECTORY }}/${{ env.RELEASE_FOLDER_NAME }}" >> $GITHUB_ENV
-          echo "ZIP_FILEPATH=${{ github.workspace }}/${{ env.RELEASE_FOLDER_NAME }}.zip" >> $GITHUB_ENV
+          echo "RELEASE_DIRECTORY=${{ env.OUT_DIRECTORY }}/$RELEASE_FOLDER_NAME" >> $GITHUB_ENV
+          echo "ZIP_FILEPATH=${{ github.workspace }}/$RELEASE_FOLDER_NAME.zip" >> $GITHUB_ENV
     
       - name: Checkout repository
         uses: actions/checkout@v4
