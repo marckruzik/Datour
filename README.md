@@ -48,7 +48,9 @@ You don't have to install Easy Context Menu, you have to unzip it and run it fro
 You can now right click on a file and edit its name.
 
 ## Shortcomings
-* There is a black console that appears a split second. It should not happen, as it is a WinExe project. Maybe it's because the exe is built on Linux (see [workflow](.github/workflows/Build_and_Release.yml)).
+* There is a black console that appears a split second at the first use after a reboot. It should not happen, as it is a WinExe project.
+  * Maybe it's because the exe is built on Linux (see [workflow](.github/workflows/Build_and_Release.yml)).
+  * Maybe the black console is launched by Easy Context Menu.
 * It has a limit of 15 files. When selecting more than 15 files, the context menu option will no longer appear.
   * This is a Windows limitation, to avoid performance issues (see related [here](https://learn.microsoft.com/en-us/troubleshoot/windows-client/shell-experience/context-menus-shortened-select-over-15-files)).
   * I do not know if Easy Context Menu can circumvent this 15 files limit.
