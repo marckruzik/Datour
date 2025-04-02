@@ -53,3 +53,5 @@ You can now right click on a file and edit its name.
   * This is a Windows limitation, to avoid performance issues (see related [here](https://learn.microsoft.com/en-us/troubleshoot/windows-client/shell-experience/context-menus-shortened-select-over-15-files)).
   * I do not know if Easy Context Menu can circumvent this 15 files limit.
 * It cannot rename a directory, it is for files only. And directory modification dates cannot be trust. If it became a new feature, it would detect the modification dates of all files, and choose the most recent date.
+* When renaming several files at the same time, they can try to edit the log file at the same file and it causes a crash.
+  * The crash comes after the renaming, so the renaming works, but the log file is not edited with a new log line.
